@@ -14,14 +14,24 @@ import com.gestion.stock.repository.StockRepository;
 import com.gestion.stock.service.StockService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.gestion.stock.enums.TypeMouvement;
+import com.gestion.stock.repository.MouvementStockSpecification;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -114,4 +124,28 @@ public class StockServiceImpl implements StockService {
         return stockRepository.findAll();
     }
     private List<MouvementStock> findAllMouvement(){return mouvementStockRepository.findAll();}
+
+    @Override
+    public Page<MouvementStockResponseDTO> searchMouvements(
+            Long produitId,
+            String reference,
+            String type,
+            String numeroLot,
+            LocalDate dateDebut,
+            LocalDate dateFin,
+            int page,
+            int size
+    ) {
+        Specification<MouvementStock> spec = Specification
+                .where(MouvementStockSpecification.produitId(produitId))
+                .and(MouvementStockSpecification.referenceProduit(reference))
+                .and(MouvementStockSpecification.type(type))
+                .and(MouvementStockSpecification.numeroLot(numeroLot))
+                .and(MouvementStockSpecification.dateBetween(dateDebut, dateFin));
+
+        return mouvementStockRepository.findAll(spec, PageRequest.of(page, size))
+                .map(mouvementStockMapper::toResponseDTO);
+    }
+
+
 }

@@ -5,7 +5,8 @@ import com.gestion.stock.dto.response.ProduitResponseDTO;
 import com.gestion.stock.dto.response.StockResponseDTO;
 import com.gestion.stock.entity.Commande;
 import com.gestion.stock.entity.DetailsCommande;
-
+import org.springframework.data.domain.Page;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +19,14 @@ public interface StockService {
     public List<MouvementStockResponseDTO> historiqueMouvementStockProduit(Long id);
     public List<ProduitResponseDTO> produitUnderThreshold();
     public String valorisationStock();
+    Page<MouvementStockResponseDTO> searchMouvements(
+            Long produitId,
+            String reference,
+            String type,
+            String numeroLot,
+            LocalDate dateDebut,
+            LocalDate dateFin,
+            int page,
+            int size
+    );
 }
