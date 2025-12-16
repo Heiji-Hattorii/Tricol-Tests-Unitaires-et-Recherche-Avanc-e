@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.Data;
 
 import java.util.List;
 
 
 @Entity
+@Data
 @Table(name="produits")
 public class Produit {
     @Id
@@ -62,77 +64,5 @@ public class Produit {
         this.stockActuel = stockActuel;
         this.pointCommande = pointCommande;
         this.UniteMesure = uniteMesure;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrixUnitaire() {
-        return prixUnitaire;
-    }
-
-    public void setPrixUnitaire(double prixUnitaire) {
-        this.prixUnitaire = prixUnitaire;
-    }
-
-    public String getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
-    }
-
-    public int getStockActuel() {
-        return stockActuel;
-    }
-
-    public void setStockActuel(int stockActuel) {
-        this.stockActuel = stockActuel;
-    }
-
-    public int getPointCommande() {
-        return pointCommande;
-    }
-
-    public void setPointCommande(int pointCommande) {
-        this.pointCommande = pointCommande;
-    }
-
-    public String getUniteMesure() {
-        return UniteMesure;
-    }
-
-    public void setUniteMesure(String uniteMesure) {
-        UniteMesure = uniteMesure;
     }
 }
