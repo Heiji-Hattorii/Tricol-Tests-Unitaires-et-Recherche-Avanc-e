@@ -13,6 +13,7 @@
         <include file="db/changelog/MouvementStocks.yaml"/>
         <include file="db/changelog/BonSortie.yaml"/>
         <include file="db/changelog/BonSortieItem.yaml"/>
+        <include file="db/changelog/Roles.yaml"/>
 
 
     </databaseChangeLog>
