@@ -2,11 +2,11 @@ package com.gestion.stock.dto.response;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class RoleResponseDTO {
     private Long id;
     private String name;
-    private List<PermissionResponseDTO> permissions;
+    private Set<PermissionResponseDTO> permissions;
 }
