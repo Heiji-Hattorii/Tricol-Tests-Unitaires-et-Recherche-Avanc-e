@@ -1,4 +1,4 @@
-    <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
     <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -14,6 +14,8 @@
         <include file="db/changelog/BonSortie.yaml"/>
         <include file="db/changelog/BonSortieItem.yaml"/>
         <include file="db/changelog/Roles.yaml"/>
-
-
+        <include file="db/changelog/Permissions.yaml"/>
+        <include file="db/changelog/Role_permissions.yaml"/>
+        <include file="db/changelog/Users.yaml"/>
+        <include file="db/changelog/User_permissions.yaml"/>
     </databaseChangeLog>

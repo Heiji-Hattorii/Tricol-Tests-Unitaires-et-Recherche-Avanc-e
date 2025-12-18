@@ -15,7 +15,9 @@ public class RoleApp {
     @Column(unique = true, nullable = false)
     private String name;
     @ManyToMany
-    @JoinTable(name = "role_permissions")
+    @JoinTable(name = "role_permissions",
+    joinColumns = @JoinColumn(name = "role_id"),
+    inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions = new HashSet<>();
 
 }
