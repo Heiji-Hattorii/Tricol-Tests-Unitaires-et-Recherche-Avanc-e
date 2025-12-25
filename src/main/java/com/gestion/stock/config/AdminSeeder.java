@@ -69,10 +69,8 @@ public class AdminSeeder implements CommandLineRunner {
             RoleApp adminRoleWithPermissions = roleRepository.findByNameWithPermissions("ADMIN")
                 .orElseThrow(() -> new RuntimeException("Rôle ADMIN non trouvé"));
             
-            // Supprimer les anciennes permissions si elles existent
             userPermissionRepository.deleteByUser(admin);
             
-            // Ajouter toutes les permissions du rôle ADMIN
             int savedCount = 0;
             for (Permission permission : adminRoleWithPermissions.getPermissions()) {
                 UserPermission userPermission = new UserPermission();

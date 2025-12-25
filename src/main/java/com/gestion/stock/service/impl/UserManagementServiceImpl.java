@@ -152,7 +152,6 @@ public class UserManagementServiceImpl implements UserManagementService {
                 String.format("Permission %s désactivée pour l'utilisateur %s", permission.getName(), user.getEmail()), null);
         }
 
-        // Recharger l'utilisateur avec ses permissions
         UserApp updatedUser = userRepository.findByIdWithPermissions(userId)
             .orElse(userRepository.findById(userId).get());
         return userMapper.toResponseDto(updatedUser);
