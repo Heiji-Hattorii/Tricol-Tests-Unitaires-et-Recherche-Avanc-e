@@ -3,7 +3,6 @@ databaseChangeLog:
       id: insert-role-permissions-admin
       author: system
       changes:
-        # ADMIN - Toutes les permissions
         - sql:
             sql: |
               INSERT INTO role_permissions (role_id, permission_id) 
@@ -15,7 +14,6 @@ databaseChangeLog:
       id: insert-role-permissions-responsable-achats
       author: system
       changes:
-        # RESPONSABLE_ACHATS permissions
         - sql:
             sql: |
               INSERT INTO role_permissions (role_id, permission_id) 
@@ -35,7 +33,6 @@ databaseChangeLog:
       id: insert-role-permissions-magasinier
       author: system
       changes:
-        # MAGASINIER permissions
         - sql:
             sql: |
               INSERT INTO role_permissions (role_id, permission_id) 
@@ -53,7 +50,6 @@ databaseChangeLog:
       id: insert-role-permissions-chef-atelier
       author: system
       changes:
-        # CHEF_ATELIER permissions
         - sql:
             sql: |
               INSERT INTO role_permissions (role_id, permission_id) 

@@ -24,7 +24,6 @@ public class AuditServiceImpl implements AuditService {
         auditLog.setEntityId(entityId);
         auditLog.setUserEmail(userEmail);
         auditLog.setDetails(details);
-        auditLog.setIpAddress(ipAddress);
         auditLog.setTimestamp(LocalDateTime.now());
         
         auditLogRepository.save(auditLog);

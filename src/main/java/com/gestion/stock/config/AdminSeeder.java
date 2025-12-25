@@ -52,9 +52,6 @@ public class AdminSeeder implements CommandLineRunner {
             admin.setPassword(passwordEncoder.encode("secret"));
             admin.setCreatedAt(LocalDateTime.now());
             admin.setEnabled(true);
-            admin.setAccountNonExpired(true);
-            admin.setAccountNonLocked(true);
-            admin.setCredentialsNonExpired(true);
             admin.setRole(adminRole);
 
             admin = userRepository.save(admin);

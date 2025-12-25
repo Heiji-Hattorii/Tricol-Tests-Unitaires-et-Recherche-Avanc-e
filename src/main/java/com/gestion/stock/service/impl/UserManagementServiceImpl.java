@@ -65,11 +65,9 @@ public class UserManagementServiceImpl implements UserManagementService {
         System.out.println("Syncing permissions for user: " + user.getEmail() + " with role: " + user.getRole().getName());
         
         try {
-            // Supprimer les anciennes permissions utilisateur
             userPermissionRepository.deleteByUser(user);
             System.out.println("Deleted old permissions for user");
 
-            // Ajouter les permissions du rôle dans user_permissions
             Set<Permission> rolePermissions = user.getRole().getPermissions();
             System.out.println("Role has " + rolePermissions.size() + " permissions");
             
@@ -105,7 +103,6 @@ public class UserManagementServiceImpl implements UserManagementService {
         Permission permission = permissionRepository.findById(request.getPermissionId())
             .orElseThrow(() -> new RuntimeException("Permission non trouvée"));
 
-        // Vérifier si la permission existe déjà
         Optional<UserPermission> existingPermission = userPermissionRepository
             .findByUserAndPermission(user, permission);
 
@@ -140,15 +137,17 @@ public class UserManagementServiceImpl implements UserManagementService {
         Permission permission = permissionRepository.findById(permissionId)
             .orElseThrow(() -> new RuntimeException("Permission non trouvée"));
 
-        Optional<UserPermission> userPermission = userPermissionRepository
+        Optional<UserPermission> userPermissionOpt = userPermissionRepository
             .findByUserAndPermission(user, permission);
 
-        if (userPermission.isPresent()) {
-            userPermissionRepository.delete(userPermission.get());
+        if (userPermissionOpt.isPresent()) {
+            UserPermission userPermission = userPermissionOpt.get();
+            userPermission.setActive(false);
+            userPermissionRepository.save(userPermission);
             
             String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
             auditService.logAction("REMOVE_PERMISSION", "USER", userId.toString(), currentUser, 
-                String.format("Permission %s supprimée pour l'utilisateur %s", permission.getName(), user.getEmail()), null);
+                String.format("Permission %s désactivée pour l'utilisateur %s", permission.getName(), user.getEmail()), null);
         }
 
         return userMapper.toResponseDto(userRepository.findById(userId).get());

@@ -29,7 +29,4 @@ public class AuditLog {
 
     @Column(nullable = false)
     private LocalDateTime timestamp = LocalDateTime.now();
-
-    @Column
-    private String ipAddress;
 }

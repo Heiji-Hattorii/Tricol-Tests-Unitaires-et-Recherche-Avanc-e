@@ -6,6 +6,7 @@ import com.gestion.stock.dto.response.AuthResponseDTO;
 import com.gestion.stock.entity.UserApp;
 import com.gestion.stock.exception.DuplicateResourceException;
 import com.gestion.stock.repository.UserAppRepository;
+import com.gestion.stock.security.CustomUserDetailsService;
 import com.gestion.stock.security.JwtUtil;
 import com.gestion.stock.service.AuthService;
 import com.gestion.stock.service.AuditService;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuditService auditService;
+    private final CustomUserDetailsService userDetailsService;
 
     @Override
     public AuthResponseDTO register(UserRequestDTO registerRequest) {
@@ -48,9 +51,9 @@ public class AuthServiceImpl implements AuthService {
         auditService.logAction("REGISTER", "USER", user.getId().toString(), 
             user.getEmail(), "Inscription d'un nouvel utilisateur", null);
 
-        // Créer une authentification temporaire pour générer les tokens
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-            user, null, user.getAuthorities()
+            userDetails, null, userDetails.getAuthorities()
         );
 
         String accessToken = jwtUtil.generateAccessToken(authentication);
@@ -61,8 +64,8 @@ public class AuthServiceImpl implements AuthService {
             refreshToken,
             "Bearer",
             user.getEmail(),
-            null, // Pas de rôle
-            Set.of() // Pas de permissions
+            null,
+            Set.of()
         );
     }
 
@@ -78,14 +81,15 @@ public class AuthServiceImpl implements AuthService {
         UserApp user = userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-            user, null, user.getAuthorities()
+            userDetails, null, userDetails.getAuthorities()
         );
 
         String newAccessToken = jwtUtil.generateAccessToken(authentication);
         String newRefreshToken = jwtUtil.generateRefreshToken(user.getEmail());
 
-        Set<String> permissions = user.getAuthorities().stream()
+        Set<String> permissions = userDetails.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toSet());
 

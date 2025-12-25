@@ -39,6 +39,3 @@ databaseChangeLog:
                   type: TIMESTAMP
                   constraints:
                     nullable: false
-              - column:
-                  name: ip_address
-                  type: VARCHAR(45)
