@@ -126,7 +126,9 @@ public class UserManagementServiceImpl implements UserManagementService {
                 request.getActive() ? "accordée" : "révoquée", 
                 user.getEmail()), null);
 
-        return userMapper.toResponseDto(userRepository.findById(user.getId()).get());
+        UserApp updatedUser = userRepository.findByIdWithPermissions(user.getId())
+            .orElse(userRepository.findById(user.getId()).get());
+        return userMapper.toResponseDto(updatedUser);
     }
 
     @Override
@@ -150,7 +152,10 @@ public class UserManagementServiceImpl implements UserManagementService {
                 String.format("Permission %s désactivée pour l'utilisateur %s", permission.getName(), user.getEmail()), null);
         }
 
-        return userMapper.toResponseDto(userRepository.findById(userId).get());
+        // Recharger l'utilisateur avec ses permissions
+        UserApp updatedUser = userRepository.findByIdWithPermissions(userId)
+            .orElse(userRepository.findById(userId).get());
+        return userMapper.toResponseDto(updatedUser);
     }
 
     @Override
