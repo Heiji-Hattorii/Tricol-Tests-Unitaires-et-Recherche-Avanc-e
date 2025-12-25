@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-        <include file="db/changelog/Fournisseurs.xml" />
-        <include file="db/changelog/Produit.xml" />
-        <include file="db/changelog/Commande.yaml"/>
-        <include file="db/changelog/DetailsCommande.yaml"/>
-        <include file="db/changelog/Stock.yaml"/>
-        <include file="db/changelog/MouvementStocks.yaml"/>
-        <include file="db/changelog/BonSortie.yaml"/>
-        <include file="db/changelog/BonSortieItem.yaml"/>
-        <include file="db/changelog/Roles.yaml"/>
-        <include file="db/changelog/Permissions.yaml"/>
-        <include file="db/changelog/Role_permissions.yaml"/>
-        <include file="db/changelog/Users.yaml"/>
-        <include file="db/changelog/User_permissions.yaml"/>
-    </databaseChangeLog>
+    <include file="db/changelog/Fournisseurs.xml" />
+    <include file="db/changelog/Produit.xml" />
+    <include file="db/changelog/Commande.yaml"/>
+    <include file="db/changelog/DetailsCommande.yaml"/>
+    <include file="db/changelog/Stock.yaml"/>
+    <include file="db/changelog/MouvementStocks.yaml"/>
+    <include file="db/changelog/BonSortie.yaml"/>
+    <include file="db/changelog/BonSortieItem.yaml"/>
+    <include file="db/changelog/Roles.yaml"/>
+    <include file="db/changelog/Permissions.yaml"/>
+    <include file="db/changelog/Role_permissions.yaml"/>
+    <include file="db/changelog/Users.yaml"/>
+    <include file="db/changelog/User_permissions.yaml"/>
+    <include file="db/changelog/AuditLogs.yaml"/>
+    <include file="db/changelog/PermissionsData.yaml"/>
+    <include file="db/changelog/RolesData.yaml"/>
+    <include file="db/changelog/RolePermissionsData.yaml"/>
+</databaseChangeLog>

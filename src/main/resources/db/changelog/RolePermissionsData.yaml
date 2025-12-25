@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-role-permissions-admin
+      author: system
+      changes:
+        # ADMIN - Toutes les permissions
+        - sql:
+            sql: |
+              INSERT INTO role_permissions (role_id, permission_id) 
+              SELECT r.id, p.id 
+              FROM roles r, permissions p 
+              WHERE r.name = 'ADMIN';
+              
+  - changeSet:
+      id: insert-role-permissions-responsable-achats
+      author: system
+      changes:
+        # RESPONSABLE_ACHATS permissions
+        - sql:
+            sql: |
+              INSERT INTO role_permissions (role_id, permission_id) 
+              SELECT r.id, p.id 
+              FROM roles r, permissions p 
+              WHERE r.name = 'RESPONSABLE_ACHATS' 
+              AND p.name IN (
+                'FOURNISSEUR_CREATE', 'FOURNISSEUR_READ', 'FOURNISSEUR_UPDATE',
+                'PRODUIT_CREATE', 'PRODUIT_READ', 'PRODUIT_UPDATE', 'PRODUIT_ALERT_CONFIG',
+                'COMMANDE_CREATE', 'COMMANDE_READ', 'COMMANDE_UPDATE', 'COMMANDE_DELETE', 
+                'COMMANDE_VALIDATE', 'COMMANDE_CANCEL',
+                'STOCK_READ', 'STOCK_VALORISATION', 'MOUVEMENT_READ',
+                'BON_SORTIE_READ'
+              );
+              
+  - changeSet:
+      id: insert-role-permissions-magasinier
+      author: system
+      changes:
+        # MAGASINIER permissions
+        - sql:
+            sql: |
+              INSERT INTO role_permissions (role_id, permission_id) 
+              SELECT r.id, p.id 
+              FROM roles r, permissions p 
+              WHERE r.name = 'MAGASINIER' 
+              AND p.name IN (
+                'FOURNISSEUR_READ', 'PRODUIT_READ',
+                'COMMANDE_READ', 'COMMANDE_RECEIVE',
+                'STOCK_READ', 'STOCK_VALORISATION', 'MOUVEMENT_READ',
+                'BON_SORTIE_CREATE', 'BON_SORTIE_READ', 'BON_SORTIE_UPDATE', 'BON_SORTIE_VALIDATE', 'BON_SORTIE_CANCEL'
+              );
+              
+  - changeSet:
+      id: insert-role-permissions-chef-atelier
+      author: system
+      changes:
+        # CHEF_ATELIER permissions
+        - sql:
+            sql: |
+              INSERT INTO role_permissions (role_id, permission_id) 
+              SELECT r.id, p.id 
+              FROM roles r, permissions p 
+              WHERE r.name = 'CHEF_ATELIER' 
+              AND p.name IN (
+                'PRODUIT_READ', 'STOCK_READ', 'MOUVEMENT_READ',
+                'BON_SORTIE_CREATE', 'BON_SORTIE_READ'
+              );

@@ -1,0 +1,155 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-permissions-data
+      author: system
+      changes:
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "FOURNISSEUR_CREATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "FOURNISSEUR_READ"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "FOURNISSEUR_UPDATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "FOURNISSEUR_DELETE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "PRODUIT_CREATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "PRODUIT_READ"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "PRODUIT_UPDATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "PRODUIT_DELETE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "PRODUIT_ALERT_CONFIG"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_CREATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_READ"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_UPDATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_DELETE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_VALIDATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_CANCEL"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "COMMANDE_RECEIVE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "STOCK_READ"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "STOCK_VALORISATION"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "MOUVEMENT_READ"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "BON_SORTIE_CREATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "BON_SORTIE_READ"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "BON_SORTIE_UPDATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "BON_SORTIE_DELETE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "BON_SORTIE_VALIDATE"
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: "BON_SORTIE_CANCEL"

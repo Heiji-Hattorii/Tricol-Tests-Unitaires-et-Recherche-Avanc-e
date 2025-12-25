@@ -12,6 +12,7 @@ import com.gestion.stock.service.CommandeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,20 +31,25 @@ public class CommandeController {
 
 
     @PostMapping
+    @PreAuthorize("hasAuthority('COMMANDE_CREATE')")
     public ResponseEntity<CommandeResponseDTO> createCommande(@Valid @RequestBody CommandeRequestDTO commandeRequestDTO){
        return ResponseEntity.ok(commandeService.saveCommande(commandeRequestDTO));
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('COMMANDE_READ')")
     public ResponseEntity<List<CommandeResponseDTO>> getAllCommandes(){
         return ResponseEntity.ok(commandeService.allCommandes());
     }
+    
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('COMMANDE_READ')")
     public ResponseEntity<CommandeResponseDTO> getCommandeByID(@PathVariable Long id){
         return  ResponseEntity.ok(commandeService.commandeByID(id));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('COMMANDE_UPDATE')")
     public ResponseEntity<CommandeResponseDTO> updateCommandeById(@PathVariable Long id, @Valid @RequestBody CommandeUpdateRequestDTO commandeRequestDTO){
 
 
@@ -51,21 +57,25 @@ public class CommandeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('COMMANDE_DELETE')")
     public ResponseEntity<String> deleteCommandeById(@PathVariable Long id){
         return ResponseEntity.ok(commandeService.deleteCommande(id));
     }
 
     @PutMapping("/{id}/annulee")
+    @PreAuthorize("hasAuthority('COMMANDE_CANCEL')")
     public ResponseEntity<CommandeResponseDTO> changeCommandeStatusAnnulee(@PathVariable Long id){
         return ResponseEntity.ok(commandeService.changeStatusToAnnulee(id));
     }
 
     @PutMapping("/{id}/livree")
+    @PreAuthorize("hasAuthority('COMMANDE_RECEIVE')")
     public ResponseEntity<Map<String,Object>> changeCommandeStatusLivree(@PathVariable Long id){
         return ResponseEntity.ok(commandeService.changeStatusToLivree(id));
     }
 
     @GetMapping("/{id}/fournisseur")
+    @PreAuthorize("hasAuthority('COMMANDE_READ')")
     public ResponseEntity<List<CommandeResponseDTO>> commandeFournisseurById(@PathVariable Long id){
         return ResponseEntity.ok(commandeService.commandesFournisseurById(id));
     }

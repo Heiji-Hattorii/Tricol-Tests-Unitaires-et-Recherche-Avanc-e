@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-roles-data
+      author: system
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: "ADMIN"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: "RESPONSABLE_ACHATS"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: "MAGASINIER"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: "CHEF_ATELIER"

@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class FournisseurController {
 
 
     @PostMapping
+    @PreAuthorize("hasAuthority('FOURNISSEUR_CREATE')")
     public ResponseEntity<FournisseurResponseDTO> createFournisseur(@Valid @RequestBody FournisseurCreateDTO fournisseurCreateDTO) throws DuplicateResourceException {
         Fournisseur  newFournisseur = mapper.toEntity(fournisseurCreateDTO);
         if(fournisseurService.emailExists(fournisseurCreateDTO.getEmail())){
@@ -50,6 +52,7 @@ public class FournisseurController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('FOURNISSEUR_READ')")
     public ResponseEntity<FournisseurResponseDTO> getFournisseurById(@PathVariable Long id){
         Fournisseur fournisseur = fournisseurService.getFournisseurById(id);
         FournisseurResponseDTO fournisseurResponseDTO = mapper.toResponseDTO(fournisseur);
@@ -58,6 +61,7 @@ public class FournisseurController {
 
 
     @GetMapping
+    @PreAuthorize("hasAuthority('FOURNISSEUR_READ')")
     public ResponseEntity<List<FournisseurResponseDTO>> getAllFournisseurs(){
         List<Fournisseur> fournisseurs = fournisseurService.getAllFournisseur();
         List<FournisseurResponseDTO> fournisseursDto = fournisseurs.stream().map(fournisseur -> mapper.toResponseDTO(fournisseur)).toList();
@@ -67,6 +71,7 @@ public class FournisseurController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('FOURNISSEUR_UPDATE')")
     public ResponseEntity<FournisseurResponseDTO> updateFournisseurs(@PathVariable Long id,@Valid @RequestBody FournisseurCreateDTO fournisseurUpdateDto){
         Fournisseur fournisseur = mapper.toEntity(fournisseurUpdateDto);
         Fournisseur updatedFournisseur = fournisseurService.updateFournisseur(fournisseur,id);
@@ -75,6 +80,7 @@ public class FournisseurController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('FOURNISSEUR_DELETE')")
     public ResponseEntity<String> deleteFournisseur(@PathVariable Long id){
         fournisseurService.deleteFournisseur(id);
         return ResponseEntity.ok("Fournisseur with the id " + id + " is deleted successfully");
