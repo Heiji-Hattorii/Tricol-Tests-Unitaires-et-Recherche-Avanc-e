@@ -3,9 +3,11 @@ package com.gestion.stock.config;
 import com.gestion.stock.entity.Permission;
 import com.gestion.stock.entity.RoleApp;
 import com.gestion.stock.entity.UserApp;
+import com.gestion.stock.entity.UserPermission;
 import com.gestion.stock.repository.PermissionRepository;
 import com.gestion.stock.repository.RoleAppRepository;
 import com.gestion.stock.repository.UserAppRepository;
+import com.gestion.stock.repository.UserPermissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,7 @@ public class AdminSeeder implements CommandLineRunner {
     private final UserAppRepository userRepository;
     private final RoleAppRepository roleRepository;
     private final PermissionRepository permissionRepository;
+    private final UserPermissionRepository userPermissionRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -35,7 +38,7 @@ public class AdminSeeder implements CommandLineRunner {
             adminRole.setName("ADMIN");
             adminRole.setPermissions(new HashSet<>(permissionRepository.findAll()));
             roleRepository.save(adminRole);
-            System.out.println("Admin role created");
+            System.out.println("Admin role created with " + adminRole.getPermissions().size() + " permissions");
         }
     }
 
@@ -54,8 +57,41 @@ public class AdminSeeder implements CommandLineRunner {
             admin.setCredentialsNonExpired(true);
             admin.setRole(adminRole);
 
-            userRepository.save(admin);
+            admin = userRepository.save(admin);
+            syncAdminPermissions(admin);
+            
             System.out.println("Admin user created: admin@tricol.com");
+        }
+    }
+
+    private void syncAdminPermissions(UserApp admin) {
+        try {
+            System.out.println("Syncing admin permissions...");
+            
+            // Charger le rôle avec ses permissions
+            RoleApp adminRoleWithPermissions = roleRepository.findByNameWithPermissions("ADMIN")
+                .orElseThrow(() -> new RuntimeException("Rôle ADMIN non trouvé"));
+            
+            // Supprimer les anciennes permissions si elles existent
+            userPermissionRepository.deleteByUser(admin);
+            
+            // Ajouter toutes les permissions du rôle ADMIN
+            int savedCount = 0;
+            for (Permission permission : adminRoleWithPermissions.getPermissions()) {
+                UserPermission userPermission = new UserPermission();
+                userPermission.setUser(admin);
+                userPermission.setPermission(permission);
+                userPermission.setActive(true);
+                
+                userPermissionRepository.save(userPermission);
+                savedCount++;
+            }
+            
+            System.out.println("Successfully synced " + savedCount + " permissions for admin user");
+            
+        } catch (Exception e) {
+            System.err.println("Error syncing admin permissions: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
