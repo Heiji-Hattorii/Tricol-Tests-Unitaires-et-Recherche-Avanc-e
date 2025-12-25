@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +28,10 @@ public class AuditServiceImpl implements AuditService {
         auditLog.setTimestamp(LocalDateTime.now());
         
         auditLogRepository.save(auditLog);
+    }
+
+    @Override
+    public List<AuditLog> getAllAuditLogs() {
+        return auditLogRepository.findAll();
     }
 }

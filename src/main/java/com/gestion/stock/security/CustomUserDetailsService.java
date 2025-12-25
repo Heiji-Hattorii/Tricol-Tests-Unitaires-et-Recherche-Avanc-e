@@ -45,12 +45,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private List<String> getUserPermissions(UserApp user) {
         Set<String> permissions = new HashSet<>();
 
-        // Prendre SEULEMENT les permissions de user_permissions (permissions effectives)
         user.getUserPermissions().stream()
             .filter(UserPermission::isActive)
             .forEach(up -> permissions.add(up.getPermission().getName()));
 
-        // Ajouter le rôle
         if (user.getRole() != null) {
             permissions.add("ROLE_" + user.getRole().getName());
         }
