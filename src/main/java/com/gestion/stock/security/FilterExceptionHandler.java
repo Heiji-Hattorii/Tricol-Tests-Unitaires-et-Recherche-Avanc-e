@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -51,7 +52,9 @@ public class FilterExceptionHandler {
         } else if (ex instanceof DuplicateResourceException) {
             return HttpStatus.BAD_REQUEST;
         } else if (ex instanceof EntityNotFoundException) {
-            return HttpStatus.BAD_REQUEST;
+            return HttpStatus.NOT_FOUND;
+        } else if (ex instanceof AccessDeniedException) {
+            return HttpStatus.FORBIDDEN;
         } else if (ex instanceof UsernameNotFoundException) {
             return HttpStatus.UNAUTHORIZED;
         } else if (ex instanceof BadCredentialsException) {
